@@ -7,7 +7,18 @@ const fetchUsers = async () => {
   return res.json();
 };
 
-const userPromise = fetchUsers();
+let cachedPromise;
+
+function getCachedUserPromise() {
+  if (!cachedPromise) {
+    cachedPromise = fetchUsers();
+  } else {
+    console.log('using cached promise');
+  }
+  return cachedPromise;
+}
+
+const userPromise = getCachedUserPromise();
 
 const Users = () => {
   const users = use(userPromise);
