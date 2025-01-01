@@ -2,9 +2,23 @@
 import { use, Suspense } from "react";
 import { fetchUsers } from './actions';
 
-const userPromise = fetchUsers();
+// make sure this promise is only created once by creating a cache object and checking if the promise is already in the cache
+let cachedPromise;
+
+function getCachedUserPromise() {
+  if (!cachedPromise) {
+    cachedPromise = fetchUsers();
+  } else {
+    console.log('using cached promise');
+  }
+  return cachedPromise;
+}
+
+const userPromise = getCachedUserPromise();
+
 
 const Users = () => {
+
   const users = use(userPromise);
 
   return (
