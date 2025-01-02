@@ -1,23 +1,18 @@
 "use client";
-import { use, Suspense } from "react";
-import { fetchUsers } from './actions';
 
-// make sure this promise is only created once by creating a cache object and checking if the promise is already in the cache
+import { use, Suspense } from "react";
+import { fetchUsers } from "./actions"; // Server Function that returns a promise
+
 let cachedPromise;
 
 function getCachedUserPromise() {
   if (!cachedPromise) {
     cachedPromise = fetchUsers();
-  } else {
-    console.log('using cached promise');
   }
   return cachedPromise;
 }
 
-const userPromise = getCachedUserPromise();
-
-
-const Users = () => {
+const Users = function ({userPromise}) {
 
   const users = use(userPromise);
 
@@ -36,9 +31,12 @@ const Users = () => {
 };
 
 function App() {
+
+  const userPromise = getCachedUserPromise();
+
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
-      <Users />
+      <Users userPromise={userPromise} />
     </Suspense>
   );
 }
