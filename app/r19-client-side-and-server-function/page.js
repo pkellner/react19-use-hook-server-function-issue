@@ -1,5 +1,10 @@
 "use client";
 
+/* has error:
+Cannot update a component (`Router`) while rendering a different component (`App`).
+To locate the bad setState() call inside `App`
+*/
+
 import { use, Suspense } from "react";
 import { fetchUsers } from "./actions"; // Server Function that returns a promise
 
