@@ -7,6 +7,9 @@ let cachedUserPromise;
 function getCachedUserPromise() {
   if (!cachedUserPromise) {
     cachedUserPromise = fetchUsers();
+    console.log("fetching users");
+  } else {
+    console.log("using cached users");
   }
   return cachedUserPromise;
 }
